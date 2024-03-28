@@ -1,0 +1,31 @@
+name: medical_center_admin
+description: "A new Flutter project."
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.2 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.6
+  shared_preferences: ^2.2.1
+  http: ^1.1.0
+  dio: ^5.3.3
+  url_launcher: ^6.2.1
+  flutter_spinkit: ^5.2.0
+  flutter_screenutil: ^5.9.0
+  get: ^4.6.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+
+  uses-material-design: true
