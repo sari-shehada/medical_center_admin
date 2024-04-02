@@ -5,6 +5,7 @@ import 'package:get/get_rx/get_rx.dart';
 import 'package:medical_center_admin/core/ui_utils/custom_divider.dart';
 import 'package:medical_center_admin/core/ui_utils/gender_icon_widget.dart';
 import 'package:medical_center_admin/core/ui_utils/title_details_spaced_widget.dart';
+import 'package:medical_center_admin/shared_widgets/refresh_list_button.dart';
 import '../../config/theme/app_colors.dart';
 import '../../core/extensions/date_time_extensions.dart';
 import '../../core/services/http_service.dart';
@@ -52,11 +53,9 @@ class _PendingDoctorApplicationsPageState
                 ),
               ),
               const Spacer(),
-              CustomFilledButton(
-                width: 240.w,
-                onTap: () => updateList(),
-                child: 'تحديث القائمة',
-              )
+              RefreshListButton(
+                refreshCallback: () => updateList(),
+              ),
             ],
           ),
         ),

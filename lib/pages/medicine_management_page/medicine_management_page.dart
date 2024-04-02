@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:medical_center_admin/config/theme/app_colors.dart';
+import 'package:medical_center_admin/core/services/http_service.dart';
+import 'package:medical_center_admin/core/services/snackbar_service.dart';
 import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
+import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
 import 'package:medical_center_admin/models/medicine.dart';
+import 'package:medical_center_admin/pages/medicine_management_page/add_medicine_dialog/add_medicine_dialog.dart';
+import 'package:medical_center_admin/pages/medicine_management_page/medicine_card_widget.dart';
+import 'package:medical_center_admin/shared_widgets/refresh_list_button.dart';
 
 class MedicineManagementPage extends StatefulWidget {
   const MedicineManagementPage({super.key});
@@ -38,10 +45,35 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
                 ),
               ),
               const Spacer(),
-              CustomFilledButton(
-                width: 240.w,
-                onTap: () => updateList(),
-                child: 'تحديث القائمة',
+              Row(
+                children: [
+                  CustomFilledButton(
+                    width: 250.w,
+                    onTap: () => addNewMedicine(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text(
+                            'اضافة دواء جديد',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  AddHorizontalSpacing(value: 15.w),
+                  RefreshListButton(
+                    refreshCallback: () => updateList(),
+                  ),
+                ],
               ),
             ],
           ),
@@ -49,7 +81,17 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
         Expanded(
           child: CustomFutureBuilder(
             future: medicinesFuture,
-            builder: (context, medicines) => Text('data'),
+            builder: (context, medicines) => GridView.builder(
+              itemCount: medicines.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+              ),
+              itemBuilder: (context, index) {
+                return MedicineCardWidget(
+                  medicine: medicines[index],
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -57,11 +99,26 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
   }
 
   Future<List<Medicine>> getMedicinesList() async {
-    return [];
+    return HttpService.parsedMultiGet(
+      endPoint: 'medicines/',
+      mapper: Medicine.fromMap,
+    );
   }
 
   void updateList() {
     medicinesFuture = getMedicinesList();
     setState(() {});
+  }
+
+  Future<void> addNewMedicine() async {
+    var result = await Get.dialog(
+      const AddNewMedicineDialog(),
+    );
+    if (result == true) {
+      SnackBarService.showSuccessSnackbar(
+        'تمت العملية بنجاح',
+      );
+      updateList();
+    }
   }
 }

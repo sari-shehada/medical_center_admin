@@ -20,6 +20,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   get: ^4.6.6
   loading_animation_widget: ^1.2.0+4
+  file_picker: ^6.0.0
 
 
 dev_dependencies:

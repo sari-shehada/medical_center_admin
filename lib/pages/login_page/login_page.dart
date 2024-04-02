@@ -61,11 +61,13 @@ class _LoginPageState extends State<LoginPage> {
                 AddVerticalSpacing(value: 35.h),
                 CustomTextField(
                   controller: usernameController,
+                  textDirection: TextDirection.ltr,
                   label: 'اسم المستخدم',
                 ),
                 AddVerticalSpacing(value: 10.h),
                 CustomTextField(
                   controller: passwordController,
+                  textDirection: TextDirection.ltr,
                   label: 'كلمة المرور',
                   obscureText: true,
                 ),

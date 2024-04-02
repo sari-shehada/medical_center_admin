@@ -77,10 +77,10 @@ class Doctor {
       lastName: map['lastName'] as String,
       username: map['username'] as String,
       dateOfBirth: DateTime.parse(map['dateOfBirth']),
-      careerStartDate: DateTime.now() ?? DateTime.parse(map['careerStartDate']),
+      careerStartDate: DateTime.parse(map['careerStartDate']),
       certificateUrl: map['certificateUrl'] as String,
       isApproved: map['isApproved'] as bool,
-      isMale: true ?? map['isMale'] as bool,
+      isMale: map['isMale'] as bool,
       approvingAdminId: map['approvingAdminId'] != null
           ? map['approvingAdminId'] as int
           : null,
