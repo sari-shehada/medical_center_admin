@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_center_admin/pages/medicine_management_page/medicine_management_page.dart';
 import '../../config/string_constants.dart';
 import '../../config/theme/app_colors.dart';
 import '../../core/ui_utils/app_logo_widget.dart';
@@ -34,7 +35,7 @@ class _DashboardState extends State<Dashboard> {
                 index: currentIndex,
                 children: const [
                   PendingDoctorApplicationsPage(),
-                  PendingDoctorApplicationsPage(),
+                  MedicineManagementPage(),
                 ],
               ),
             )
@@ -106,9 +107,9 @@ class _DashboardNavigationRailWidget extends StatelessWidget {
                   ),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.monitor_heart),
+                  icon: Icon(Icons.medication_rounded),
                   label: Text(
-                    'place holder',
+                    'إدارة الأدوية',
                   ),
                 ),
               ],
