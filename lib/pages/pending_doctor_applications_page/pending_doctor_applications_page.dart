@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:medical_center_admin/core/ui_utils/custom_divider.dart';
+import 'package:medical_center_admin/core/ui_utils/gender_icon_widget.dart';
+import 'package:medical_center_admin/core/ui_utils/title_details_spaced_widget.dart';
 import '../../config/theme/app_colors.dart';
-import '../../core/exceptions/not_found_exception.dart';
 import '../../core/extensions/date_time_extensions.dart';
 import '../../core/services/http_service.dart';
 import '../../core/services/snackbar_service.dart';
@@ -92,7 +93,7 @@ class _PendingDoctorApplicationsPageState
                                   const Spacer(),
                                   Text(
                                     doctor.careerStartDate.getDateOnly(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: secondary,
                                     ),
                                   ),
@@ -192,50 +193,6 @@ class NoPendingDoctorsWidget extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-//TODO: Remove later
-class TableHeader extends StatelessWidget {
-  const TableHeader({super.key, required this.headers});
-
-  final List<String> headers;
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: headers.map((e) => TableHeaderItem(value: e)).toList(),
-    );
-  }
-}
-
-//TODO: Remove later
-class TableHeaderItem extends StatelessWidget {
-  const TableHeaderItem({
-    super.key,
-    required this.value,
-  });
-  final String value;
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Text(
-        value,
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-}
-
-class CustomDivider extends StatelessWidget {
-  const CustomDivider({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Divider(
-      color: Colors.grey.withOpacity(0.5),
     );
   }
 }
@@ -365,28 +322,27 @@ class _DoctorDetailsWindowState extends State<DoctorDetailsWindow> {
   }
 
   Future<void> acceptDoctor() async {
-    try {
-      setIsExecutingAction(true);
-      var response = await HttpService.rawFullResponsePost(
-          endPoint: 'doctors/${doctor.id}/approveApplication/',
-          body: {
-            'adminId': AccountManager.instance.user!.id,
-          });
-      if (response.statusCode == 200) {
-        SnackBarService.showNeutralSnackbar(
-          'تم قبول طلب الانضمام',
-        );
-        widget.updateListCallback();
-        return;
-      }
-      if (response.statusCode == 400) {
-        SnackBarService.showSuccessSnackbar(
-          'لقد قام مشرف اخر بقبول الطلب',
-        );
-        widget.updateListCallback();
-        return;
-      }
-    } on NotFoundException catch (_) {
+    setIsExecutingAction(true);
+    var response = await HttpService.rawFullResponsePost(
+        endPoint: 'doctors/${doctor.id}/approveApplication/',
+        body: {
+          'adminId': AccountManager.instance.user!.id,
+        });
+    if (response.statusCode == 200) {
+      SnackBarService.showNeutralSnackbar(
+        'تم قبول طلب الانضمام',
+      );
+      widget.updateListCallback();
+      return;
+    }
+    if (response.statusCode == 400) {
+      SnackBarService.showSuccessSnackbar(
+        'لقد قام مشرف اخر بقبول الطلب',
+      );
+      widget.updateListCallback();
+      return;
+    }
+    if (response.statusCode == 404) {
       SnackBarService.showNeutralSnackbar(
         'لقد قام مشرف اخر برفض الطلب',
       );
@@ -395,26 +351,25 @@ class _DoctorDetailsWindowState extends State<DoctorDetailsWindow> {
   }
 
   Future<void> rejectDoctor() async {
-    try {
-      setIsExecutingAction(true);
-      var response = await HttpService.rawFullResponsePost(
-        endPoint: 'doctors/${doctor.id}/rejectApplication/',
+    setIsExecutingAction(true);
+    var response = await HttpService.rawFullResponsePost(
+      endPoint: 'doctors/${doctor.id}/rejectApplication/',
+    );
+    if (response.statusCode == 200) {
+      SnackBarService.showNeutralSnackbar(
+        'تم رفض طلب الانضمام',
       );
-      if (response.statusCode == 200) {
-        SnackBarService.showNeutralSnackbar(
-          'تم رفض طلب الانضمام',
-        );
-        widget.updateListCallback();
-        return;
-      }
-      if (response.statusCode == 400) {
-        SnackBarService.showNeutralSnackbar(
-          'لقد قام مشرف اخر بالتعامل مع الطلب',
-        );
-        widget.updateListCallback();
-        return;
-      }
-    } on NotFoundException catch (_) {
+      widget.updateListCallback();
+      return;
+    }
+    if (response.statusCode == 400) {
+      SnackBarService.showNeutralSnackbar(
+        'لقد قام مشرف اخر بقبول الطلب',
+      );
+      widget.updateListCallback();
+      return;
+    }
+    if (response.statusCode == 404) {
       SnackBarService.showNeutralSnackbar(
         'لقد قام مشرف اخر برفض الطلب',
       );
@@ -424,64 +379,4 @@ class _DoctorDetailsWindowState extends State<DoctorDetailsWindow> {
 
   bool isExecutingAction = false;
   Rx<CustomButtonStatus> buttonStatus = CustomButtonStatus.enabled.obs;
-}
-
-class GenderIconWidget extends StatelessWidget {
-  const GenderIconWidget(
-      {super.key, required this.isMale, this.size, this.color});
-
-  final bool isMale;
-  final double? size;
-  final Color? color;
-  @override
-  Widget build(BuildContext context) {
-    return Icon(
-      isMale ? Icons.male : Icons.female,
-      size: size ?? 30.sp,
-      color: color,
-    );
-  }
-}
-
-class TitleDetailsSpacedWidget extends StatelessWidget {
-  const TitleDetailsSpacedWidget({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.details,
-  });
-
-  final IconData icon;
-  final String title;
-  final String details;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 6.w),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: Colors.grey.shade700,
-          ),
-          AddHorizontalSpacing(value: 6.w),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 20.sp,
-              color: Colors.grey.shade700,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            details,
-            style: TextStyle(
-              fontSize: 20.sp,
-              color: secondary,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
