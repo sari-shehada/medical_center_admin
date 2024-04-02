@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
+
+import 'app_colors.dart';
 
 ThemeData get lightTheme => ThemeData(
       fontFamily: 'Jannat',

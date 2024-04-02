@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:medical_center_admin/pages/dashboard/dashboard.dart';
-import 'package:medical_center_admin/pages/loader_page/loader_page.dart';
-import 'package:medical_center_admin/pages/login_page/login_page.dart';
+import 'dashboard/dashboard.dart';
+import 'loader_page/loader_page.dart';
+import 'login_page/login_page.dart';
 
 abstract class NavigationController {
   static Future<void> toLoginPage({

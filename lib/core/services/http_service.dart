@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
-import 'package:medical_center_admin/core/exceptions/not_found_exception.dart';
+import '../exceptions/not_found_exception.dart';
 
 import '../extensions/maps_extensions/map_extensions.dart';
 import 'package:dio/dio.dart';

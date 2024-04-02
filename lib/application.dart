@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/config/string_constants.dart';
-import 'package:medical_center_admin/config/theme/app_theme.dart';
-import 'package:medical_center_admin/pages/loader_page/loader_page.dart';
+import 'config/string_constants.dart';
+import 'config/theme/app_theme.dart';
+import 'pages/loader_page/loader_page.dart';
 
 class Application extends StatelessWidget {
   const Application({super.key});

@@ -3,16 +3,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
-import 'package:medical_center_admin/core/exceptions/not_found_exception.dart';
-import 'package:medical_center_admin/core/extensions/date_time_extensions.dart';
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
-import 'package:medical_center_admin/managers/account_manager.dart';
-import 'package:medical_center_admin/pages/pending_doctor_applications_page/models/doctor.dart';
+import '../../config/theme/app_colors.dart';
+import '../../core/exceptions/not_found_exception.dart';
+import '../../core/extensions/date_time_extensions.dart';
+import '../../core/services/http_service.dart';
+import '../../core/services/snackbar_service.dart';
+import '../../core/ui_utils/buttons/custom_filled_button.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../core/widgets/custom_future_builder.dart';
+import '../../managers/account_manager.dart';
+import 'models/doctor.dart';
 
 class PendingDoctorApplicationsPage extends StatefulWidget {
   const PendingDoctorApplicationsPage({super.key});

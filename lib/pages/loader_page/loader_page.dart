@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_admin/core/ui_utils/app_logo_widget.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/managers/account_manager.dart';
+import '../../core/ui_utils/app_logo_widget.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../managers/account_manager.dart';
 
 import '../../config/string_constants.dart';
 import '../navigation_controller.dart';

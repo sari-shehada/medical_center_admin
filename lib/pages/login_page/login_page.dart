@@ -3,16 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/ui_utils/app_logo_widget.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/core/ui_utils/text_fields/custom_text_field.dart';
-import 'package:medical_center_admin/managers/account_manager.dart';
-import 'package:medical_center_admin/models/admin_info.dart';
-import 'package:medical_center_admin/pages/login_page/models/login_form.dart';
-import 'package:medical_center_admin/pages/navigation_controller.dart';
+import '../../core/services/http_service.dart';
+import '../../core/services/snackbar_service.dart';
+import '../../core/ui_utils/app_logo_widget.dart';
+import '../../core/ui_utils/buttons/custom_filled_button.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../core/ui_utils/text_fields/custom_text_field.dart';
+import '../../managers/account_manager.dart';
+import '../../models/admin_info.dart';
+import 'models/login_form.dart';
+import '../navigation_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

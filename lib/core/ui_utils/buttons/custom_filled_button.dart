@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/core/ui_utils/loaders/linear_loading_indicator_widget.dart';
+import '../loaders/linear_loading_indicator_widget.dart';
 
 class CustomFilledButton extends StatelessWidget {
   const CustomFilledButton({
