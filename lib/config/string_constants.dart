@@ -1,3 +1,3 @@
 class StringConstants {
-  static const appName = 'Medical Center - Admins';
+  static const appName = 'المركز الطبي | منصة المشرفين';
 }

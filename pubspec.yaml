@@ -19,6 +19,8 @@ dependencies:
   flutter_spinkit: ^5.2.0
   flutter_screenutil: ^5.9.0
   get: ^4.6.6
+  loading_animation_widget: ^1.2.0+4
+
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +31,13 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/app_logo.png
+
+  fonts:
+    - family: Jannat
+      fonts:
+        - asset: fonts/jannat-lt.ttf
+        - asset: fonts/jannat-lt.ttf
+          weight: 700
