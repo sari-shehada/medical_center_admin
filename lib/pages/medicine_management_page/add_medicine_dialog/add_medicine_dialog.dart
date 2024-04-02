@@ -60,34 +60,50 @@ class _AddNewMedicineDialogState extends State<AddNewMedicineDialog> {
                     AddVerticalSpacing(value: 25.h),
                     Text(
                       'صورة الدواء',
-                      style: TextStyle(fontSize: 20.sp),
+                      style: TextStyle(fontSize: 28.sp),
                     ),
                     AddVerticalSpacing(value: 25.h),
-                    Container(
-                      height: 200.sp,
-                      width: 200.sp,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.r),
-                        border: Border.all(
-                          width: 2.sp,
-                          color: primaryColor,
-                        ),
-                      ),
-                      child: InkWell(
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.camera,
-                                size: 85.sp,
-                              ),
-                              AddVerticalSpacing(value: 15.h),
-                              Text(
-                                'select',
-                                style: TextStyle(fontSize: 26.sp),
-                              ),
-                            ],
+                    Align(
+                      child: Container(
+                        height: 400.sp,
+                        width: 400.sp,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.r),
+                          border: Border.all(
+                            width: 1.5.sp,
+                            color: primaryColor,
                           ),
+                        ),
+                        child: InkWell(
+                          onTap: () async {
+                            if (await form.pickMedicineImage()) {
+                              setState(() {});
+                            }
+                          },
+                          child: form.imageBytes == null
+                              ? Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.photo,
+                                        size: 85.sp,
+                                        color: Colors.grey.shade800,
+                                      ),
+                                      AddVerticalSpacing(value: 15.h),
+                                      Text(
+                                        'قم باختيار صورة',
+                                        style: TextStyle(
+                                          fontSize: 26.sp,
+                                          color: Colors.grey.shade800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Image.memory(
+                                  form.imageBytes!,
+                                ),
                         ),
                       ),
                     )
