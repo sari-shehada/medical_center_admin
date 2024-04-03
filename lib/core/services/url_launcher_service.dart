@@ -1,6 +1,18 @@
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
 class UrlLauncherService {
+  static void launchUrl({
+    required String url,
+  }) async {
+    if (!await url_launcher.canLaunchUrl(Uri.parse(url))) {
+      return;
+    }
+    url_launcher.launchUrl(
+      Uri.parse(url),
+      mode: url_launcher.LaunchMode.externalApplication,
+    );
+  }
+
   static void openPhoneDialer({
     String? phoneNumber,
   }) {

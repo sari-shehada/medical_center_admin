@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
 import 'package:medical_center_admin/managers/account_manager.dart';
+import 'package:medical_center_admin/pages/diseases_external_links_management_page/diseases_external_links_management_page.dart';
 import 'package:medical_center_admin/pages/medicine_management_page/medicine_management_page.dart';
 import '../../config/string_constants.dart';
 import '../../config/theme/app_colors.dart';
@@ -38,6 +39,7 @@ class _DashboardState extends State<Dashboard> {
                 children: const [
                   PendingDoctorApplicationsPage(),
                   MedicineManagementPage(),
+                  DiseasesExternalLinksManagementPage(),
                 ],
               ),
             )
@@ -112,6 +114,12 @@ class _DashboardNavigationRailWidget extends StatelessWidget {
                   icon: Icon(Icons.medication_rounded),
                   label: Text(
                     'إدارة الأدوية',
+                  ),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.medication_rounded),
+                  label: Text(
+                    'إدارة مقالات الأمراض',
                   ),
                 ),
               ],
