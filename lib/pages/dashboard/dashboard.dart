@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
+import 'package:medical_center_admin/managers/account_manager.dart';
 import 'package:medical_center_admin/pages/medicine_management_page/medicine_management_page.dart';
 import '../../config/string_constants.dart';
 import '../../config/theme/app_colors.dart';
@@ -116,6 +118,22 @@ class _DashboardNavigationRailWidget extends StatelessWidget {
               selectedIndex: currentIndex,
             ),
           ),
+          AddVerticalSpacing(value: 20.h),
+          Text(
+            AccountManager.instance.user!.fullName,
+            style: TextStyle(
+              fontSize: 30.sp,
+              color: primaryColor,
+            ),
+          ),
+          AddVerticalSpacing(value: 20.h),
+          CustomFilledButton(
+            width: 250.w,
+            height: 50.h,
+            onTap: () => AccountManager.instance.logOut(),
+            child: 'تسجيل الخروج',
+          ),
+          AddVerticalSpacing(value: 30.h),
         ],
       ),
     );

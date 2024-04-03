@@ -36,6 +36,8 @@ class AdminInfo {
     };
   }
 
+  String get fullName => '$firstName $lastName';
+
   factory AdminInfo.fromMap(Map<String, dynamic> map) {
     return AdminInfo(
       id: map['id'] as int,

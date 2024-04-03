@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,7 @@ import 'package:medical_center_admin/config/theme/app_colors.dart';
 import 'package:medical_center_admin/core/services/http_service.dart';
 import 'package:medical_center_admin/core/services/snackbar_service.dart';
 import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
+import 'package:medical_center_admin/core/ui_utils/loaders/linear_loading_indicator_widget.dart';
 import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
 import 'package:medical_center_admin/models/medicine.dart';
@@ -91,6 +93,9 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
               ),
               itemBuilder: (context, index) {
                 return MedicineCardWidget(
+                  deleteMedicineCallback: () => deleteMedicine(
+                    medicines[index].id,
+                  ),
                   medicine: medicines[index],
                 );
               },
@@ -123,5 +128,88 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
       );
       updateList();
     }
+  }
+
+  Future<void> deleteMedicine(int medicineId) async {
+    var result = await Get.dialog(
+      const DeleteSomethingConfirmationDialog(thingName: 'دواء'),
+    );
+    if (result == true) {
+      Get.showOverlay(
+        loadingWidget: const Material(
+          color: Colors.transparent,
+          child: Center(
+            child: LinearLoadingIndicatorWidget(),
+          ),
+        ),
+        asyncFunction: () async {
+          var response = await HttpService.rawFullResponsePost(
+            endPoint: 'medicines/$medicineId/delete/',
+          );
+          if (response.statusCode == 200) {
+            updateList();
+          }
+        },
+      );
+    }
+  }
+}
+
+class DeleteSomethingConfirmationDialog extends StatelessWidget {
+  const DeleteSomethingConfirmationDialog({super.key, required this.thingName});
+
+  final String thingName;
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Center(
+        child: Container(
+          width: MediaQuery.sizeOf(context).width * .4,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15.r),
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 25.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'تأكيد عملية الحذف',
+                style: TextStyle(
+                  fontSize: 30.sp,
+                  color: primaryColor,
+                ),
+              ),
+              AddVerticalSpacing(value: 15.h),
+              Text(
+                'انت على وشك حذف $thingName, هذا الإجراء نهائي ولا يمكن التراجع عنه',
+              ),
+              AddVerticalSpacing(value: 25.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  FilledButton(
+                    onPressed: () => Get.back(result: true),
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.red),
+                    ),
+                    child: const Text(
+                      'متابعة',
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => Get.back(result: false),
+                    child: const Text(
+                      'الغاء العملية',
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

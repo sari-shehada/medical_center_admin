@@ -1,3 +1,5 @@
+import 'package:medical_center_admin/pages/navigation_controller.dart';
+
 import '../core/exceptions/not_found_exception.dart';
 import '../core/services/http_service.dart';
 import '../core/services/shared_prefs_service.dart';
@@ -48,9 +50,18 @@ class AccountManager {
   }
 
   static Future<void> _saveUserIdToLocalStorage(int id) async {
-    SharedPreferencesService.instance.setInt(
+    await SharedPreferencesService.instance.setInt(
       key: 'adminId',
       value: id,
     );
+  }
+
+  Future<void> logOut() async {
+    await SharedPreferencesService.instance.removeKey(
+      key: 'adminId',
+    );
+    user = null;
+    isLoggedIn = false;
+    NavigationController.toLoginPage();
   }
 }

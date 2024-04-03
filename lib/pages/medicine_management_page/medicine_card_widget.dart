@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_center_admin/models/medicine.dart';
 
 class MedicineCardWidget extends StatelessWidget {
-  const MedicineCardWidget({super.key, required this.medicine});
+  const MedicineCardWidget(
+      {super.key, required this.medicine, this.deleteMedicineCallback});
   final Medicine medicine;
+  final VoidCallback? deleteMedicineCallback;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,8 +33,22 @@ class MedicineCardWidget extends StatelessWidget {
           Expanded(
             flex: 25,
             child: Center(
-              child: Text(
-                medicine.name,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    medicine.name,
+                  ),
+                  if (deleteMedicineCallback != null)
+                    IconButton(
+                      onPressed: () => deleteMedicineCallback!(),
+                      icon: Icon(
+                        Icons.delete,
+                        size: 30.sp,
+                        color: Colors.red,
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
