@@ -107,7 +107,7 @@ class _AddArticleToDiseaseDialogState extends State<AddArticleToDiseaseDialog> {
                               setState(() {});
                             }
                           },
-                          child: form.imageFile == null
+                          child: form.imageBytes == null
                               ? Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -128,8 +128,8 @@ class _AddArticleToDiseaseDialogState extends State<AddArticleToDiseaseDialog> {
                                     ],
                                   ),
                                 )
-                              : Image.file(
-                                  form.imageFile!,
+                              : Image.memory(
+                                  form.imageBytes!,
                                   fit: BoxFit.cover,
                                 ),
                         ),

@@ -136,9 +136,9 @@ class HttpService {
         method: 'POST',
         baseUrl: baseUrl,
         headers: {
-          'Content-Type': 'multipart/form-data',
-          'Cache-Control': 'max-age=0',
-          'Connection': 'keep-alive',
+          // 'Content-Type': 'multipart/form-data',
+          // 'Cache-Control': 'max-age=0',
+          // 'Connection': 'keep-alive',
         },
       ),
     );

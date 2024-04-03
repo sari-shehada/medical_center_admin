@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class AddMedicineForm {
   TextEditingController nameController = TextEditingController();
-  File? imageFile;
+  Uint8List? imageBytes;
   String? fileExtension;
   Future<bool> pickMedicineImage() async {
     FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles(
@@ -20,9 +20,9 @@ class AddMedicineForm {
     }
     var file = filePickerResult.files.first;
     if (kIsWeb) {
-      imageFile = File.fromRawPath(file.bytes!);
+      imageBytes = file.bytes!;
     } else {
-      imageFile = File(file.path!);
+      imageBytes = await File(file.path!).readAsBytes();
     }
     fileExtension = file.extension;
     print(fileExtension);
@@ -33,7 +33,7 @@ class AddMedicineForm {
     if (nameController.text.isEmpty) {
       return 'يرجى ملء حقل اسم الدواء';
     }
-    if (imageFile == null) {
+    if (imageBytes == null) {
       return 'يرجى اختيار صورة للدواء';
     }
     return null;
@@ -45,7 +45,7 @@ class AddMedicineForm {
       {
         'name': nameController.text,
         'imageUrl': MultipartFile.fromBytes(
-          await imageFile!.readAsBytes(),
+          imageBytes!,
           filename: '$imageName.$fileExtension',
         ),
       },

@@ -14,7 +14,7 @@ class AddArticleForm {
   TextEditingController titleController = TextEditingController();
   TextEditingController briefController = TextEditingController();
   TextEditingController linkController = TextEditingController();
-  File? imageFile;
+  Uint8List? imageBytes;
   String? fileExtension;
 
   Future<bool> pickArticleImage() async {
@@ -27,9 +27,9 @@ class AddArticleForm {
     }
     var file = filePickerResult.files.first;
     if (kIsWeb) {
-      imageFile = File.fromRawPath(file.bytes!);
+      imageBytes = file.bytes!;
     } else {
-      imageFile = File(file.path!);
+      imageBytes = await File(file.path!).readAsBytes();
     }
     fileExtension = file.extension;
 
@@ -42,7 +42,7 @@ class AddArticleForm {
         linkController.text.isEmpty) {
       return 'يرجى ملء جميع الحقول للمتابعة';
     }
-    if (imageFile == null) {
+    if (imageBytes == null) {
       return 'يرجى اختيار صورة للمقال';
     }
     return null;
@@ -57,7 +57,7 @@ class AddArticleForm {
         'link': linkController.text,
         'diseaseId': diseaseId,
         'imageUrl': MultipartFile.fromBytes(
-          await imageFile!.readAsBytes(),
+          imageBytes!,
           filename: '$imageName.$fileExtension',
         ),
       },

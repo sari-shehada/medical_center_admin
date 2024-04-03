@@ -85,7 +85,7 @@ class _AddNewMedicineDialogState extends State<AddNewMedicineDialog> {
                               setState(() {});
                             }
                           },
-                          child: form.imageFile == null
+                          child: form.imageBytes == null
                               ? Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -106,8 +106,8 @@ class _AddNewMedicineDialogState extends State<AddNewMedicineDialog> {
                                     ],
                                   ),
                                 )
-                              : Image.file(
-                                  form.imageFile!,
+                              : Image.memory(
+                                  form.imageBytes!,
                                   fit: BoxFit.cover,
                                 ),
                         ),
