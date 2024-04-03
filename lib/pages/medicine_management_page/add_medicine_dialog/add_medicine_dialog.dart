@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:medical_center_admin/config/theme/app_colors.dart';
+import 'package:medical_center_admin/core/services/http_service.dart';
+import 'package:medical_center_admin/core/services/snackbar_service.dart';
+import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
 import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_admin/core/ui_utils/text_fields/custom_text_field.dart';
 import 'package:medical_center_admin/pages/medicine_management_page/add_medicine_dialog/forms/add_medicine_form.dart';
@@ -15,6 +18,8 @@ class AddNewMedicineDialog extends StatefulWidget {
 
 class _AddNewMedicineDialogState extends State<AddNewMedicineDialog> {
   AddMedicineForm form = AddMedicineForm();
+  Rx<CustomButtonStatus> addMedicineButtonStatus =
+      CustomButtonStatus.enabled.obs;
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
@@ -80,7 +85,7 @@ class _AddNewMedicineDialogState extends State<AddNewMedicineDialog> {
                               setState(() {});
                             }
                           },
-                          child: form.imageBytes == null
+                          child: form.imageFile == null
                               ? Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -101,12 +106,19 @@ class _AddNewMedicineDialogState extends State<AddNewMedicineDialog> {
                                     ],
                                   ),
                                 )
-                              : Image.memory(
-                                  form.imageBytes!,
+                              : Image.file(
+                                  form.imageFile!,
+                                  fit: BoxFit.cover,
                                 ),
                         ),
                       ),
-                    )
+                    ),
+                    AddVerticalSpacing(value: 20.h),
+                    CustomFilledButton(
+                      onTap: () => addMedicine(),
+                      buttonStatus: addMedicineButtonStatus,
+                      child: 'إضافة الدواء',
+                    ),
                   ],
                 ),
               ),
@@ -115,5 +127,28 @@ class _AddNewMedicineDialogState extends State<AddNewMedicineDialog> {
         ),
       ),
     );
+  }
+
+  Future<void> addMedicine() async {
+    String? validationMessage = form.validateForm();
+    if (validationMessage != null) {
+      SnackBarService.showErrorSnackbar(validationMessage);
+      return;
+    }
+    try {
+      addMedicineButtonStatus.value = CustomButtonStatus.processing;
+
+      var response = await HttpService.dioMultiPartPost(
+        endPoint: 'medicines/new/',
+        formData: await form.toFormData(),
+      );
+      if (response.statusCode == 201) {
+        Get.back(result: true);
+      }
+    } catch (e) {
+      SnackBarService.showErrorSnackbar('يرجى التأكد من اتصال الانترنت');
+    } finally {
+      addMedicineButtonStatus.value = CustomButtonStatus.enabled;
+    }
   }
 }

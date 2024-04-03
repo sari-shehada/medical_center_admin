@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import '../exceptions/not_found_exception.dart';
 
@@ -11,6 +10,7 @@ class HttpService {
   // static const String baseUrl = 'http://192.168.43.224:8000';
   // static const String baseUrl = 'http://192.168.1.7:8000';
   static const String baseUrl = 'https://medicalcenter24.eu.pythonanywhere.com';
+  // static const String baseUrl = 'http://localhost:8000';
 
   static bool requestJsonFormattingByDefault = true;
 
@@ -126,10 +126,10 @@ class HttpService {
 
   static Future<Response> dioMultiPartPost({
     required String endPoint,
-    Map<String, dynamic>? body,
-    List<MultipartFile> files = const [],
-    void Function(int, int)? onSendProgress,
-    void Function(int, int)? onReceiveProgress,
+    FormData? formData,
+    // List<MultipartFile> files = const [],
+    // void Function(int, int)? onSendProgress,
+    // void Function(int, int)? onReceiveProgress,
   }) async {
     Dio dio = Dio(
       BaseOptions(
@@ -142,29 +142,10 @@ class HttpService {
         },
       ),
     );
-    FormData formData = FormData.fromMap(body?.toStringStringMap() ?? {});
-    formData.files.addAll(
-      files.map(
-        (e) {
-          return MapEntry(
-            e.filename ?? '${RandomUuidGen.getRandomUuid()}.jpg',
-            e,
-          );
-        },
-      ).toList(),
-    );
     Response response = await dio.post(
       '/$endPoint',
       data: formData,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
     );
     return response;
-  }
-}
-
-class RandomUuidGen {
-  static String getRandomUuid() {
-    return Random().nextInt(9999).toString();
   }
 }
