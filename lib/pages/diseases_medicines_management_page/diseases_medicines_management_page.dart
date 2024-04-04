@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:medical_center_admin/config/theme/app_colors.dart';
 import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
 import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/custom_divider.dart';
 import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
 import 'package:medical_center_admin/managers/diseases_repository.dart';
 import 'package:medical_center_admin/models/disease.dart';
-import 'package:medical_center_admin/models/external_link.dart';
-import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/add_article_to_disease_dialog/add_article_to_disease_dialog.dart';
-import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/article_details_dialog/article_details_dialog.dart';
+import 'package:medical_center_admin/models/medicine.dart';
+import 'package:medical_center_admin/pages/medicine_management_page/medicine_card_widget.dart';
 
-class DiseasesExternalLinksManagementPage extends StatefulWidget {
-  const DiseasesExternalLinksManagementPage({super.key});
+class DiseaseMedicinesManagementPage extends StatefulWidget {
+  const DiseaseMedicinesManagementPage({super.key});
 
   @override
-  State<DiseasesExternalLinksManagementPage> createState() =>
-      _DiseasesExternalLinksManagementPageState();
+  State<DiseaseMedicinesManagementPage> createState() =>
+      _DiseaseMedicinesManagementPageState();
 }
 
-class _DiseasesExternalLinksManagementPageState
-    extends State<DiseasesExternalLinksManagementPage> {
+class _DiseaseMedicinesManagementPageState
+    extends State<DiseaseMedicinesManagementPage> {
   Disease? selectedDisease;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,7 +31,7 @@ class _DiseasesExternalLinksManagementPageState
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           child: Text(
-            'إدارة مقالات الأمراض',
+            'إدارة أدوية الأمراض',
             style: TextStyle(
               fontSize: 30.sp,
               color: primaryColor,
@@ -89,7 +86,7 @@ class _DiseasesExternalLinksManagementPageState
                               ),
                               AddVerticalSpacing(value: 50.h),
                               Text(
-                                'قم باختيار أحد الأمراض لعرض التفاصيل',
+                                'قم باختيار أحد الأمراض لعرض الأدوية',
                                 style: TextStyle(
                                   fontSize: 25.sp,
                                 ),
@@ -98,7 +95,7 @@ class _DiseasesExternalLinksManagementPageState
                             ],
                           ),
                         )
-                      : DiseaseExternalLinksWindow(
+                      : DiseaseMedicinesWindow(
                           disease: selectedDisease!,
                         ),
                 ),
@@ -121,35 +118,18 @@ class _DiseasesExternalLinksManagementPageState
   }
 }
 
-class DiseaseExternalLinksWindow extends StatefulWidget {
-  const DiseaseExternalLinksWindow({super.key, required this.disease});
-
+class DiseaseMedicinesWindow extends StatelessWidget {
+  const DiseaseMedicinesWindow({super.key, required this.disease});
   final Disease disease;
-
-  @override
-  State<DiseaseExternalLinksWindow> createState() =>
-      _DiseaseExternalLinksWindowState();
-}
-
-class _DiseaseExternalLinksWindowState
-    extends State<DiseaseExternalLinksWindow> {
-  late Future<List<ExternalLink>> externalLinksFuture;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    externalLinksFuture = getExternalLinks();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.disease.name,
+            disease.name,
             style: TextStyle(
               fontSize: 28.sp,
               color: primaryColor,
@@ -158,9 +138,9 @@ class _DiseaseExternalLinksWindowState
           AddVerticalSpacing(value: 20.h),
           Expanded(
             child: CustomFutureBuilder(
-              future: externalLinksFuture,
-              builder: (context, externalLinks) {
-                if (externalLinks.isEmpty) {
+              future: getMedicinesList(),
+              builder: (context, medicines) {
+                if (medicines.isEmpty) {
                   return Center(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -181,37 +161,25 @@ class _DiseaseExternalLinksWindowState
                     ),
                   );
                 }
-                return ListView.separated(
-                  itemCount: externalLinks.length,
+                return GridView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 30.w),
+                  itemCount: medicines.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                    childAspectRatio: 0.8,
+                  ),
                   itemBuilder: (context, index) {
-                    ExternalLink link = externalLinks[index];
-                    return ListTile(
-                      onTap: () async {
-                        if (await Get.dialog(
-                              ArticleDetailsDialog(
-                                link: link,
-                              ),
-                            ) ==
-                            true) {
-                          setState(() {});
-                        }
-                      },
-                      minLeadingWidth: 70.w,
-                      leading: Image.network(link.imageUrl),
-                      title: Text(link.title),
-                      subtitle: Text(link.brief),
+                    return MedicineCardWidget(
+                      medicine: medicines[index],
                     );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const CustomDivider();
                   },
                 );
               },
             ),
           ),
           CustomFilledButton(
-            onTap: addArticle,
-            child: 'إضافة مقال جديد',
+            onTap: addNewMedicines,
+            child: 'إضافة أدوية جديدة',
           ),
           AddVerticalSpacing(value: 20.h),
         ],
@@ -219,24 +187,12 @@ class _DiseaseExternalLinksWindowState
     );
   }
 
-  Future<List<ExternalLink>> getExternalLinks() async {
-    return await HttpService.parsedMultiGet(
-      endPoint: 'disease/${widget.disease.id}/externalLinks/',
-      mapper: ExternalLink.fromMap,
-    );
-  }
+  Future<void> addNewMedicines() async {}
 
-  Future<void> addArticle() async {
-    var result = await Get.dialog(
-      AddArticleToDiseaseDialog(
-        diseaseId: widget.disease.id,
-      ),
+  Future<List<Medicine>> getMedicinesList() async {
+    return await HttpService.parsedMultiGet(
+      endPoint: 'disease/${disease.id}/medicines/',
+      mapper: Medicine.fromMap,
     );
-    if (result == true) {
-      SnackBarService.showSuccessSnackbar(
-        'تم إضافة مقال جديد',
-      );
-      setState(() {});
-    }
   }
 }
