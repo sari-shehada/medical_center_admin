@@ -136,12 +136,7 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
     );
     if (result == true) {
       Get.showOverlay(
-        loadingWidget: const Material(
-          color: Colors.transparent,
-          child: Center(
-            child: LinearLoadingIndicatorWidget(),
-          ),
-        ),
+        loadingWidget: const FullScreenLoader(),
         asyncFunction: () async {
           var response = await HttpService.rawFullResponsePost(
             endPoint: 'medicines/$medicineId/delete/',
@@ -152,6 +147,22 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
         },
       );
     }
+  }
+}
+
+class FullScreenLoader extends StatelessWidget {
+  const FullScreenLoader({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Material(
+      color: Colors.transparent,
+      child: Center(
+        child: LinearLoadingIndicatorWidget(),
+      ),
+    );
   }
 }
 

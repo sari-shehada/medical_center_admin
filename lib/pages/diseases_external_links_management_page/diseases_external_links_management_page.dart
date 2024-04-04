@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:medical_center_admin/config/theme/app_colors.dart';
 import 'package:medical_center_admin/core/services/http_service.dart';
 import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/services/url_launcher_service.dart';
 import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
 import 'package:medical_center_admin/core/ui_utils/custom_divider.dart';
 import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
@@ -12,7 +11,8 @@ import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
 import 'package:medical_center_admin/managers/diseases_repository.dart';
 import 'package:medical_center_admin/models/disease.dart';
 import 'package:medical_center_admin/models/external_link.dart';
-import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/add_article_to_disease_dialog.dart';
+import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/add_article_to_disease_dialog/add_article_to_disease_dialog.dart';
+import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/article_details_dialog/article_details_dialog.dart';
 
 class DiseasesExternalLinksManagementPage extends StatefulWidget {
   const DiseasesExternalLinksManagementPage({super.key});
@@ -186,7 +186,16 @@ class _DiseaseExternalLinksWindowState
                   itemBuilder: (context, index) {
                     ExternalLink link = externalLinks[index];
                     return ListTile(
-                      onTap: () => UrlLauncherService.launchUrl(url: link.link),
+                      onTap: () async {
+                        if (await Get.dialog(
+                          ArticleDetailsDialog(
+                            link: link,
+                          ),
+                        )) {
+                          setState(() {});
+                        }
+                      },
+                      minLeadingWidth: 70.w,
                       leading: Image.network(link.imageUrl),
                       title: Text(link.title),
                       subtitle: Text(link.brief),

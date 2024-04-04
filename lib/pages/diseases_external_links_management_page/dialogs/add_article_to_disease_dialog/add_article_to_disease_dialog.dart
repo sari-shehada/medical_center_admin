@@ -7,7 +7,7 @@ import 'package:medical_center_admin/core/services/snackbar_service.dart';
 import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
 import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_admin/core/ui_utils/text_fields/custom_text_field.dart';
-import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/forms/add_article_form.dart';
+import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/add_article_to_disease_dialog/forms/add_article_form.dart';
 
 class AddArticleToDiseaseDialog extends StatefulWidget {
   const AddArticleToDiseaseDialog({super.key, required this.diseaseId});
@@ -139,7 +139,7 @@ class _AddArticleToDiseaseDialogState extends State<AddArticleToDiseaseDialog> {
                     CustomFilledButton(
                       onTap: () => addArticle(),
                       buttonStatus: addMedicineButtonStatus,
-                      child: 'إضافة الدواء',
+                      child: 'إضافة المقال',
                     ),
                   ],
                 ),
