@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:medical_center_admin/config/theme/app_colors.dart';
 import 'package:medical_center_admin/core/services/http_service.dart';
+import 'package:medical_center_admin/core/services/snackbar_service.dart';
 import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
 import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
 import 'package:medical_center_admin/managers/diseases_repository.dart';
 import 'package:medical_center_admin/models/disease.dart';
 import 'package:medical_center_admin/models/medicine.dart';
+import 'package:medical_center_admin/pages/diseases_medicines_management_page/dialogs/add_medicines_to_disease_dialog.dart';
 import 'package:medical_center_admin/pages/medicine_management_page/medicine_card_widget.dart';
 
 class DiseaseMedicinesManagementPage extends StatefulWidget {
@@ -118,9 +121,15 @@ class _DiseaseMedicinesManagementPageState
   }
 }
 
-class DiseaseMedicinesWindow extends StatelessWidget {
+class DiseaseMedicinesWindow extends StatefulWidget {
   const DiseaseMedicinesWindow({super.key, required this.disease});
   final Disease disease;
+
+  @override
+  State<DiseaseMedicinesWindow> createState() => _DiseaseMedicinesWindowState();
+}
+
+class _DiseaseMedicinesWindowState extends State<DiseaseMedicinesWindow> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -129,7 +138,7 @@ class DiseaseMedicinesWindow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            disease.name,
+            widget.disease.name,
             style: TextStyle(
               fontSize: 28.sp,
               color: primaryColor,
@@ -152,7 +161,7 @@ class DiseaseMedicinesWindow extends StatelessWidget {
                         ),
                         AddVerticalSpacing(value: 20.h),
                         Text(
-                          'لم يتم العثور على مقالات لهذا المرض',
+                          'لم يتم العثور على أدوية لهذا المرض',
                           style: TextStyle(
                             fontSize: 22.sp,
                           ),
@@ -187,11 +196,23 @@ class DiseaseMedicinesWindow extends StatelessWidget {
     );
   }
 
-  Future<void> addNewMedicines() async {}
+  Future<void> addNewMedicines() async {
+    var result = await Get.dialog(
+      AddMedicinesToDiseaseDialog(
+        disease: widget.disease,
+      ),
+    );
+    if (result == true) {
+      SnackBarService.showSuccessSnackbar(
+        'تمت العملية بنجاح',
+      );
+      setState(() {});
+    }
+  }
 
   Future<List<Medicine>> getMedicinesList() async {
     return await HttpService.parsedMultiGet(
-      endPoint: 'disease/${disease.id}/medicines/',
+      endPoint: 'disease/${widget.disease.id}/medicines/',
       mapper: Medicine.fromMap,
     );
   }
