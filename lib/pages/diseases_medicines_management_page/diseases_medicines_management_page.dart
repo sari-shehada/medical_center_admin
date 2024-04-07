@@ -11,7 +11,6 @@ import 'package:medical_center_admin/managers/diseases_repository.dart';
 import 'package:medical_center_admin/models/disease.dart';
 import 'package:medical_center_admin/models/medicine.dart';
 import 'package:medical_center_admin/pages/diseases_medicines_management_page/dialogs/add_medicines_to_disease_dialog.dart';
-import 'package:medical_center_admin/pages/medicine_management_page/medicine_card_widget.dart';
 
 class DiseaseMedicinesManagementPage extends StatefulWidget {
   const DiseaseMedicinesManagementPage({super.key});
@@ -99,6 +98,9 @@ class _DiseaseMedicinesManagementPageState
                           ),
                         )
                       : DiseaseMedicinesWindow(
+                          key: Key(
+                            selectedDisease!.id.toString(),
+                          ),
                           disease: selectedDisease!,
                         ),
                 ),
@@ -130,6 +132,16 @@ class DiseaseMedicinesWindow extends StatefulWidget {
 }
 
 class _DiseaseMedicinesWindowState extends State<DiseaseMedicinesWindow> {
+  late Future<List<Medicine>> diseaseMedicinesFuture;
+
+  List<int> selectedMedicines = [];
+
+  @override
+  void initState() {
+    diseaseMedicinesFuture = getMedicinesList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -137,17 +149,33 @@ class _DiseaseMedicinesWindowState extends State<DiseaseMedicinesWindow> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.disease.name,
-            style: TextStyle(
-              fontSize: 28.sp,
-              color: primaryColor,
+          SizedBox(
+            height: 60.h,
+            child: Row(
+              children: [
+                Text(
+                  widget.disease.name,
+                  style: TextStyle(
+                    fontSize: 28.sp,
+                    color: primaryColor,
+                  ),
+                ),
+                const Spacer(),
+                if (selectedMedicines.isNotEmpty)
+                  CustomFilledButton(
+                    width: 350.w,
+                    buttonStatus: deleteButtonStatus,
+                    onTap: () => deleteSelectedMedicines(),
+                    backgroundColor: Colors.red,
+                    child: 'حذف الادوية من هذا المرض',
+                  ),
+              ],
             ),
           ),
           AddVerticalSpacing(value: 20.h),
           Expanded(
             child: CustomFutureBuilder(
-              future: getMedicinesList(),
+              future: diseaseMedicinesFuture,
               builder: (context, medicines) {
                 if (medicines.isEmpty) {
                   return Center(
@@ -173,13 +201,20 @@ class _DiseaseMedicinesWindowState extends State<DiseaseMedicinesWindow> {
                 return GridView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 30.w),
                   itemCount: medicines.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 5,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
                     childAspectRatio: 0.8,
+                    crossAxisSpacing: 15.w,
+                    mainAxisSpacing: 20.w,
                   ),
                   itemBuilder: (context, index) {
-                    return MedicineCardWidget(
+                    return SelectableMedicineCardWidget(
                       medicine: medicines[index],
+                      isSelected: selectedMedicines.contains(
+                        medicines[index].id,
+                      ),
+                      onSelectCallback: (Medicine medicine) =>
+                          toggleSelectedMedicine(medicine),
                     );
                   },
                 );
@@ -196,6 +231,16 @@ class _DiseaseMedicinesWindowState extends State<DiseaseMedicinesWindow> {
     );
   }
 
+  void toggleSelectedMedicine(Medicine medicine) {
+    if (selectedMedicines.contains(medicine.id)) {
+      selectedMedicines.remove(medicine.id);
+    } else {
+      selectedMedicines.add(medicine.id);
+    }
+    setState(() {});
+    return;
+  }
+
   Future<void> addNewMedicines() async {
     var result = await Get.dialog(
       AddMedicinesToDiseaseDialog(
@@ -206,14 +251,43 @@ class _DiseaseMedicinesWindowState extends State<DiseaseMedicinesWindow> {
       SnackBarService.showSuccessSnackbar(
         'تمت العملية بنجاح',
       );
-      setState(() {});
+      refreshList();
     }
   }
 
   Future<List<Medicine>> getMedicinesList() async {
+    selectedMedicines = [];
     return await HttpService.parsedMultiGet(
       endPoint: 'disease/${widget.disease.id}/medicines/',
       mapper: Medicine.fromMap,
     );
+  }
+
+  void refreshList() {
+    setState(() {
+      diseaseMedicinesFuture = getMedicinesList();
+    });
+  }
+
+  Rx<CustomButtonStatus> deleteButtonStatus = CustomButtonStatus.enabled.obs;
+  Future<void> deleteSelectedMedicines() async {
+    try {
+      deleteButtonStatus.value = CustomButtonStatus.processing;
+
+      var result = await HttpService.rawFullResponsePost(
+        endPoint: 'disease/${widget.disease.id}/removeMedicines/',
+        body: {
+          'diseaseMedicineIds': selectedMedicines,
+        },
+      );
+      if (result.statusCode == 200) {
+        SnackBarService.showSuccessSnackbar(
+          'تمت العملية بنجاح',
+        );
+        refreshList();
+      }
+    } finally {
+      deleteButtonStatus.value = CustomButtonStatus.enabled;
+    }
   }
 }

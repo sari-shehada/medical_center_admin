@@ -31,12 +31,12 @@ class HttpService {
     required String endPoint,
     Map<String, dynamic>? body,
   }) async {
-    body = body?.toStringStringMap();
     http.Response response = await http.post(
       Uri.parse(
         _getCombinedUrl(baseUrl, endPoint),
       ),
-      body: body,
+      body: jsonEncode(body),
+      headers: {'Content-Type': 'application/json'},
     );
     return response;
   }

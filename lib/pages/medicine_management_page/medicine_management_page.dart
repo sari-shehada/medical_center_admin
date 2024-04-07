@@ -87,9 +87,11 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
             builder: (context, medicines) => GridView.builder(
               padding: EdgeInsets.symmetric(horizontal: 30.w),
               itemCount: medicines.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
                 childAspectRatio: 0.8,
+                crossAxisSpacing: 15.w,
+                mainAxisSpacing: 20.w,
               ),
               itemBuilder: (context, index) {
                 return MedicineCardWidget(
