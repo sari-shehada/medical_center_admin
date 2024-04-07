@@ -25,7 +25,6 @@ class AddMedicineForm {
       imageBytes = await File(file.path!).readAsBytes();
     }
     fileExtension = file.extension;
-    print(fileExtension);
     return true;
   }
 

@@ -20,7 +20,6 @@ class CustomFutureBuilder<T> extends StatelessWidget {
         }
 
         if (snapshot.hasError || snapshot.data == null) {
-          print(snapshot.error);
           return const Center(
             child: Text('Error Occurred'),
           );
