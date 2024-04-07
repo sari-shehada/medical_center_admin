@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:medical_center_admin/pages/medicine_management_page/add_medicine_dialog/forms/add_medicine_form.dart';
+
+import '../../../../medicine_management_page/add_medicine_dialog/forms/add_medicine_form.dart';
 
 class AddArticleForm {
   AddArticleForm({

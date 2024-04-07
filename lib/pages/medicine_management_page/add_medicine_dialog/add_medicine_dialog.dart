@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/core/ui_utils/text_fields/custom_text_field.dart';
-import 'package:medical_center_admin/pages/medicine_management_page/add_medicine_dialog/forms/add_medicine_form.dart';
+import '../../../config/theme/app_colors.dart';
+import '../../../core/services/http_service.dart';
+import '../../../core/services/snackbar_service.dart';
+import '../../../core/ui_utils/buttons/custom_filled_button.dart';
+import '../../../core/ui_utils/spacing_utils.dart';
+import '../../../core/ui_utils/text_fields/custom_text_field.dart';
+import 'forms/add_medicine_form.dart';
 
 class AddNewMedicineDialog extends StatefulWidget {
   const AddNewMedicineDialog({super.key});

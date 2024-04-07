@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
-import 'package:medical_center_admin/models/disease.dart';
-import 'package:medical_center_admin/models/medicine.dart';
+import '../../../config/theme/app_colors.dart';
+import '../../../core/services/http_service.dart';
+import '../../../core/services/snackbar_service.dart';
+import '../../../core/ui_utils/buttons/custom_filled_button.dart';
+import '../../../core/ui_utils/spacing_utils.dart';
+import '../../../core/widgets/custom_future_builder.dart';
+import '../../../models/disease.dart';
+import '../../../models/medicine.dart';
 
 class AddMedicinesToDiseaseDialog extends StatefulWidget {
   const AddMedicinesToDiseaseDialog({super.key, required this.disease});

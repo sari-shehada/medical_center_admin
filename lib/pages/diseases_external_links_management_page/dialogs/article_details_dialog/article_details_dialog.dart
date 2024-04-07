@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/services/url_launcher_service.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/models/external_link.dart';
-import 'package:medical_center_admin/pages/medicine_management_page/medicine_management_page.dart';
+import '../../../../config/theme/app_colors.dart';
+import '../../../../core/services/http_service.dart';
+import '../../../../core/services/snackbar_service.dart';
+import '../../../../core/services/url_launcher_service.dart';
+import '../../../../core/ui_utils/buttons/custom_filled_button.dart';
+import '../../../../core/ui_utils/spacing_utils.dart';
+import '../../../../models/external_link.dart';
+import '../../../medicine_management_page/medicine_management_page.dart';
 
 class ArticleDetailsDialog extends StatelessWidget {
   const ArticleDetailsDialog({super.key, required this.link});

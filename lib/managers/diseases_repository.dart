@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/shared_prefs_service.dart';
-import 'package:medical_center_admin/models/disease.dart';
+import '../core/services/http_service.dart';
+import '../core/services/shared_prefs_service.dart';
+import '../models/disease.dart';
 
 class DiseasesRepository {
   static Future<List<Disease>>? _diseasesFuture;

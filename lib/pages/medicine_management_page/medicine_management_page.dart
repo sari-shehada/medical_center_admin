@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/loaders/linear_loading_indicator_widget.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
-import 'package:medical_center_admin/models/medicine.dart';
-import 'package:medical_center_admin/pages/medicine_management_page/add_medicine_dialog/add_medicine_dialog.dart';
-import 'package:medical_center_admin/pages/medicine_management_page/medicine_card_widget.dart';
-import 'package:medical_center_admin/shared_widgets/refresh_list_button.dart';
+import '../../config/theme/app_colors.dart';
+import '../../core/services/http_service.dart';
+import '../../core/services/snackbar_service.dart';
+import '../../core/ui_utils/buttons/custom_filled_button.dart';
+import '../../core/ui_utils/loaders/linear_loading_indicator_widget.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../core/widgets/custom_future_builder.dart';
+import '../../models/medicine.dart';
+import 'add_medicine_dialog/add_medicine_dialog.dart';
+import 'medicine_card_widget.dart';
+import '../../shared_widgets/refresh_list_button.dart';
 
 class MedicineManagementPage extends StatefulWidget {
   const MedicineManagementPage({super.key});

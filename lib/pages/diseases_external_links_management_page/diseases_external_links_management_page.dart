@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
-import 'package:medical_center_admin/core/services/http_service.dart';
-import 'package:medical_center_admin/core/services/snackbar_service.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
-import 'package:medical_center_admin/core/ui_utils/custom_divider.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_admin/core/widgets/custom_future_builder.dart';
-import 'package:medical_center_admin/managers/diseases_repository.dart';
-import 'package:medical_center_admin/models/disease.dart';
-import 'package:medical_center_admin/models/external_link.dart';
-import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/add_article_to_disease_dialog/add_article_to_disease_dialog.dart';
-import 'package:medical_center_admin/pages/diseases_external_links_management_page/dialogs/article_details_dialog/article_details_dialog.dart';
+import '../../config/theme/app_colors.dart';
+import '../../core/services/http_service.dart';
+import '../../core/services/snackbar_service.dart';
+import '../../core/ui_utils/buttons/custom_filled_button.dart';
+import '../../core/ui_utils/custom_divider.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../core/widgets/custom_future_builder.dart';
+import '../../managers/diseases_repository.dart';
+import '../../models/disease.dart';
+import '../../models/external_link.dart';
+import 'dialogs/add_article_to_disease_dialog/add_article_to_disease_dialog.dart';
+import 'dialogs/article_details_dialog/article_details_dialog.dart';
 
 class DiseasesExternalLinksManagementPage extends StatefulWidget {
   const DiseasesExternalLinksManagementPage({super.key});

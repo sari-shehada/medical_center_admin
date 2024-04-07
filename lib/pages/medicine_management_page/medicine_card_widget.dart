@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_admin/models/medicine.dart';
+import '../../models/medicine.dart';
 
 class MedicineCardWidget extends StatelessWidget {
   const MedicineCardWidget(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_admin/core/ui_utils/buttons/custom_filled_button.dart';
+import '../core/ui_utils/buttons/custom_filled_button.dart';
 
 class RefreshListButton extends StatelessWidget {
   const RefreshListButton({super.key, required this.refreshCallback});

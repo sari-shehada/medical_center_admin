@@ -1,4 +1,4 @@
-import 'package:medical_center_admin/pages/navigation_controller.dart';
+import '../pages/navigation_controller.dart';
 
 import '../core/exceptions/not_found_exception.dart';
 import '../core/services/http_service.dart';
