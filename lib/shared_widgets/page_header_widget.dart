@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:medical_center_admin/config/theme/app_colors.dart';
-import 'package:medical_center_admin/core/ui_utils/spacing_utils.dart';
+import '../config/theme/app_colors.dart';
+import '../core/ui_utils/spacing_utils.dart';
 
 class PageHeaderWidget extends StatelessWidget {
   const PageHeaderWidget({

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../loaders/linear_loading_indicator_widget.dart';
 
 class CustomFilledButton extends StatelessWidget {

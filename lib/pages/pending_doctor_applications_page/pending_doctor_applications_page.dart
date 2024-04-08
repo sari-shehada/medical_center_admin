@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
-import 'package:medical_center_admin/shared_widgets/page_header_widget.dart';
+import '../../shared_widgets/page_header_widget.dart';
 import '../../core/ui_utils/custom_divider.dart';
 import '../../core/ui_utils/gender_icon_widget.dart';
 import '../../core/ui_utils/title_details_spaced_widget.dart';

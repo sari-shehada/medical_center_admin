@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_admin/shared_widgets/page_header_widget.dart';
+import '../../shared_widgets/page_header_widget.dart';
 import '../../config/theme/app_colors.dart';
 import '../../core/services/http_service.dart';
 import '../../core/services/snackbar_service.dart';
