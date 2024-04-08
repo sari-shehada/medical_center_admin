@@ -21,6 +21,7 @@ dependencies:
   get: ^4.6.6
   loading_animation_widget: ^1.2.0+4
   file_picker: ^6.0.0
+  font_awesome_flutter: ^10.7.0
 
 
 dev_dependencies:

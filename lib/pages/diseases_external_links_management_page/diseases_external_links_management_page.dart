@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:medical_center_admin/shared_widgets/page_header_widget.dart';
 import '../../config/theme/app_colors.dart';
 import '../../core/services/http_service.dart';
 import '../../core/services/snackbar_service.dart';
@@ -31,15 +33,11 @@ class _DiseasesExternalLinksManagementPageState
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Text(
-            'إدارة مقالات الأمراض',
-            style: TextStyle(
-              fontSize: 30.sp,
-              color: primaryColor,
-            ),
-          ),
+        const PageHeaderWidget(
+          iconData: FontAwesomeIcons.bookMedical,
+          title: 'إدارة مقالات الأمراض',
+          subTitle:
+              'قم بعرض المقالات المتعلقة بكل مرض في النظام وإضافة مقالات جديدة',
         ),
         Expanded(
           child: Row(
@@ -99,6 +97,9 @@ class _DiseasesExternalLinksManagementPageState
                           ),
                         )
                       : DiseaseExternalLinksWindow(
+                          key: Key(
+                            selectedDisease!.id.toString(),
+                          ),
                           disease: selectedDisease!,
                         ),
                 ),
@@ -137,23 +138,34 @@ class _DiseaseExternalLinksWindowState
 
   @override
   void initState() {
+    externalLinksFuture = getExternalLinks();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    externalLinksFuture = getExternalLinks();
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.disease.name,
-            style: TextStyle(
-              fontSize: 28.sp,
-              color: primaryColor,
-            ),
+          Row(
+            children: [
+              Text(
+                widget.disease.name,
+                style: TextStyle(
+                  fontSize: 28.sp,
+                  color: primaryColor,
+                ),
+              ),
+              const Spacer(),
+              CustomFilledButton(
+                width: 300.w,
+                height: 50.h,
+                onTap: updateList,
+                child: 'تحديث القائمة',
+              ),
+            ],
           ),
           AddVerticalSpacing(value: 20.h),
           Expanded(
@@ -186,16 +198,7 @@ class _DiseaseExternalLinksWindowState
                   itemBuilder: (context, index) {
                     ExternalLink link = externalLinks[index];
                     return ListTile(
-                      onTap: () async {
-                        if (await Get.dialog(
-                              ArticleDetailsDialog(
-                                link: link,
-                              ),
-                            ) ==
-                            true) {
-                          setState(() {});
-                        }
-                      },
+                      onTap: () => deleteArticle(link),
                       minLeadingWidth: 70.w,
                       leading: Image.network(link.imageUrl),
                       title: Text(link.title),
@@ -219,6 +222,17 @@ class _DiseaseExternalLinksWindowState
     );
   }
 
+  Future<void> deleteArticle(ExternalLink link) async {
+    if (await Get.dialog(
+          ArticleDetailsDialog(
+            link: link,
+          ),
+        ) ==
+        true) {
+      updateList();
+    }
+  }
+
   Future<List<ExternalLink>> getExternalLinks() async {
     return await HttpService.parsedMultiGet(
       endPoint: 'disease/${widget.disease.id}/externalLinks/',
@@ -236,7 +250,12 @@ class _DiseaseExternalLinksWindowState
       SnackBarService.showSuccessSnackbar(
         'تم إضافة مقال جديد',
       );
-      setState(() {});
+      updateList();
     }
+  }
+
+  void updateList() {
+    externalLinksFuture = getExternalLinks();
+    setState(() {});
   }
 }

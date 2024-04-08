@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../core/ui_utils/buttons/custom_filled_button.dart';
 import '../../managers/account_manager.dart';
 import '../diseases_external_links_management_page/diseases_external_links_management_page.dart';
@@ -107,25 +108,25 @@ class _DashboardNavigationRailWidget extends StatelessWidget {
               ),
               destinations: const [
                 NavigationRailDestination(
-                  icon: Icon(Icons.monitor_heart),
+                  icon: FaIcon(FontAwesomeIcons.userDoctor),
                   label: Text(
                     'طلبات انضمام الأطباء الجديدة',
                   ),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.medication_rounded),
+                  icon: FaIcon(FontAwesomeIcons.syringe),
                   label: Text(
                     'إدارة الأدوية',
                   ),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.medication_rounded),
+                  icon: FaIcon(FontAwesomeIcons.bookMedical),
                   label: Text(
                     'إدارة مقالات الأمراض',
                   ),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.medication_rounded),
+                  icon: FaIcon(FontAwesomeIcons.pills),
                   label: Text(
                     'إدارة أدوية الأمراض',
                   ),

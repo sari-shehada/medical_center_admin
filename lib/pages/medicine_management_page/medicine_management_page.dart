@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:medical_center_admin/shared_widgets/page_header_widget.dart';
 import '../../config/theme/app_colors.dart';
 import '../../core/services/http_service.dart';
 import '../../core/services/snackbar_service.dart';
@@ -34,50 +36,38 @@ class _MedicineManagementPageState extends State<MedicineManagementPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Row(
-            children: [
-              Text(
-                'إدارة الأدوية',
-                style: TextStyle(
-                  fontSize: 30.sp,
-                  color: primaryColor,
-                ),
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  CustomFilledButton(
-                    width: 250.w,
-                    onTap: () => addNewMedicine(),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Text(
-                            'اضافة دواء جديد',
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                          Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
-                        ],
+        PageHeaderWidget(
+          iconData: FontAwesomeIcons.syringe,
+          title: 'إدارة الأدوية',
+          subTitle: 'قم بعرض الأدوية المتاحة في النظام واضافة او حذف أدوية',
+          actions: [
+            CustomFilledButton(
+              width: 250.w,
+              onTap: () => addNewMedicine(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      'اضافة دواء جديد',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
                     ),
-                  ),
-                  AddHorizontalSpacing(value: 15.w),
-                  RefreshListButton(
-                    refreshCallback: () => updateList(),
-                  ),
-                ],
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            AddHorizontalSpacing(value: 15.w),
+            RefreshListButton(
+              refreshCallback: () => updateList(),
+            ),
+          ],
         ),
         AddVerticalSpacing(value: 15.h),
         Expanded(

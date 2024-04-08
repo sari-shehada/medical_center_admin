@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:medical_center_admin/shared_widgets/page_header_widget.dart';
 import '../../config/theme/app_colors.dart';
 import '../../core/services/http_service.dart';
 import '../../core/services/snackbar_service.dart';
@@ -30,15 +32,11 @@ class _DiseaseMedicinesManagementPageState
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Text(
-            'إدارة أدوية الأمراض',
-            style: TextStyle(
-              fontSize: 30.sp,
-              color: primaryColor,
-            ),
-          ),
+        const PageHeaderWidget(
+          iconData: FontAwesomeIcons.pills,
+          title: 'إدارة أدوية الأمراض',
+          subTitle:
+              'قم بعرض الأدوية المتعلقة بكل مرض في النظام وإضافة أو حذف أدوية جديدة',
         ),
         Expanded(
           child: Row(

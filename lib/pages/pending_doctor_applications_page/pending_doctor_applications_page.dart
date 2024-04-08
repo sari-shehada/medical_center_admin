@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:medical_center_admin/shared_widgets/page_header_widget.dart';
 import '../../core/ui_utils/custom_divider.dart';
 import '../../core/ui_utils/gender_icon_widget.dart';
 import '../../core/ui_utils/title_details_spaced_widget.dart';
@@ -41,23 +43,16 @@ class _PendingDoctorApplicationsPageState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Row(
-            children: [
-              Text(
-                'طلبات انضمام الأطباء الجديدة',
-                style: TextStyle(
-                  fontSize: 30.sp,
-                  color: primaryColor,
-                ),
-              ),
-              const Spacer(),
-              RefreshListButton(
-                refreshCallback: () => updateList(),
-              ),
-            ],
-          ),
+        PageHeaderWidget(
+          iconData: FontAwesomeIcons.userDoctor,
+          title: 'طلبات انضمام الأطباء الجديدة',
+          subTitle:
+              'قم بعرض طلبات انتساب الأطباء الجديدة والموافقة عليها أو رفضها',
+          actions: [
+            RefreshListButton(
+              refreshCallback: () => updateList(),
+            ),
+          ],
         ),
         Expanded(
           child: CustomFutureBuilder(
