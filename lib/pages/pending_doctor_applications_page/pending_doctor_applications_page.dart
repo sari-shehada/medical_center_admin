@@ -149,6 +149,7 @@ class _PendingDoctorApplicationsPageState
   }
 
   void updateList() {
+    selectedDoctor = null;
     pendingDocs = getPendingDoctors();
     setState(() {});
   }

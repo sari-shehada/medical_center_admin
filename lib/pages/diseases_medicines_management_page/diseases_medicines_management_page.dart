@@ -80,8 +80,8 @@ class _DiseaseMedicinesManagementPageState
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.find_replace,
+                              FaIcon(
+                                FontAwesomeIcons.pills,
                                 size: 200.sp,
                               ),
                               AddVerticalSpacing(value: 50.h),

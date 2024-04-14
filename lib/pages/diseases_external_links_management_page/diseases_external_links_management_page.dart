@@ -81,8 +81,8 @@ class _DiseasesExternalLinksManagementPageState
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.find_replace,
+                              FaIcon(
+                                FontAwesomeIcons.bookMedical,
                                 size: 200.sp,
                               ),
                               AddVerticalSpacing(value: 50.h),
